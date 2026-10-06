@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hong Kong Live</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <h1>Hong Kong <span>Live</span></h1>
+    <p class="identity"><strong>Mingli Liu</strong> · MSc in Electronic and Electrical Engineering</p>
+    <p class="intro">This dashboard shows live Hong Kong information including weather, transport and air quality.</p>
+    <section class="cards" aria-label="Dashboard sections">
+      <article class="card" id="weather-card">
+        <h2>Weather</h2>
+        <p class="weather-status" id="weather-status">Loading live weather…</p>
+        <div id="weather-content" hidden>
+          <div class="weather-main">
+            <img id="weather-icon" alt="">
+            <div>
+              <p class="weather-temp" id="weather-temp"></p>
+              <p class="weather-condition" id="weather-condition"></p>
+            </div>
+          </div>
+          <div class="weather-meta">
+            <p>Humidity <span id="weather-humidity"></span></p>
+            <p>UV index <span id="weather-uv"></span></p>
+            <p>Rainfall (past hour) <span id="weather-rain"></span></p>
+          </div>
+          <p class="weather-warning" id="weather-warning" hidden></p>
+          <p class="weather-updated" id="weather-updated"></p>
+        </div>
+      </article>
+      <article class="card" id="transport-card">
+        <h2>Transport</h2>
+        <p class="transport-status" id="transport-status">Loading live train times…</p>
+        <div id="transport-content" hidden>
+          <p class="transport-line"><span class="field-label">Line:</span><span id="transport-line"></span></p>
+          <p class="transport-dest"><span class="field-label">Destination:</span><span id="transport-dest"></span></p>
+          <p class="transport-next"><span class="field-label">Next train:</span><span id="transport-next"></span></p>
+        </div>
+      </article>
+      <article class="card" id="air-quality-card">
+        <h2>Air Quality</h2>
+        <p class="air-status" id="air-status">Loading live air quality…</p>
+        <div id="air-content" hidden>
+          <p class="air-station"><span class="field-label">Station:</span><span id="air-station"></span></p>
+          <p class="air-aqhi"><span class="field-label">AQHI:</span><span id="air-aqhi"></span></p>
+          <p class="air-risk"><span class="field-label">Health risk:</span><span id="air-risk"></span></p>
+        </div>
+      </article>
+    </section>
+  </main>
+  <footer>Data from the Hong Kong Government and DATA.GOV.HK.</footer>
+  <script src="format.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
