@@ -198,8 +198,57 @@
       color: var(--muted);
     }
 
+    .refresh-timer {
+      position: fixed;
+      left: 16px;
+      bottom: 16px;
+      width: 64px;
+      height: 64px;
+      z-index: 20;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      box-shadow: 0 8px 24px rgba(30, 64, 110, 0.12);
+    }
+
+    .refresh-ring {
+      width: 64px;
+      height: 64px;
+      transform: rotate(-90deg);
+    }
+
+    .refresh-ring-track,
+    .refresh-ring-progress {
+      fill: none;
+      stroke-width: 2.5;
+    }
+
+    .refresh-ring-track {
+      stroke: #d5dde6;
+    }
+
+    .refresh-ring-progress {
+      stroke: var(--accent);
+      stroke-linecap: round;
+    }
+
+    .refresh-count {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
     @media (max-width: 700px) {
       .cards {
         grid-template-columns: 1fr;
+      }
+
+      .page {
+        padding-bottom: 96px;
       }
     }

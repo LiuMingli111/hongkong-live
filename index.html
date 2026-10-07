@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hong Kong Live</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
   <main class="page">
@@ -52,8 +52,15 @@
       </article>
     </section>
   </main>
+  <div class="refresh-timer" id="refresh-timer" role="timer" aria-label="Next refresh in 30 seconds">
+    <svg class="refresh-ring" viewBox="0 0 36 36" aria-hidden="true">
+      <circle class="refresh-ring-track" cx="18" cy="18" r="15.5"></circle>
+      <circle class="refresh-ring-progress" id="refresh-ring" cx="18" cy="18" r="15.5"></circle>
+    </svg>
+    <span class="refresh-count" id="refresh-count">30</span>
+  </div>
   <footer>Data from the Hong Kong Government and DATA.GOV.HK.</footer>
   <script src="format.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>

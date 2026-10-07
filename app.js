@@ -7,7 +7,7 @@
       const content = document.getElementById("weather-content");
 
       try {
-        const response = await fetch(WEATHER_URL);
+        const response = await fetch(WEATHER_URL, { cache: "no-store" });
         if (!response.ok) throw new Error("Weather request failed");
         const data = await response.json();
 
@@ -36,10 +36,8 @@
           ? rawWarning.filter(Boolean).join(" · ")
           : rawWarning;
         const warningEl = document.getElementById("weather-warning");
-        if (warning) {
-          warningEl.textContent = warning;
-          warningEl.hidden = false;
-        }
+        warningEl.textContent = warning || "";
+        warningEl.hidden = !warning;
 
         document.getElementById("weather-updated").textContent =
           "Updated " + formatTime(data.updateTime) + " · Hong Kong Observatory";
@@ -56,7 +54,7 @@
       const content = document.getElementById("air-content");
 
       try {
-        const response = await fetch(AIR_QUALITY_URL);
+        const response = await fetch(AIR_QUALITY_URL, { cache: "no-store" });
         if (!response.ok) throw new Error("Air quality request failed");
         const data = await response.json();
 
@@ -81,7 +79,7 @@
       const content = document.getElementById("transport-content");
 
       try {
-        const response = await fetch(TRANSPORT_URL);
+        const response = await fetch(TRANSPORT_URL, { cache: "no-store" });
         if (!response.ok) throw new Error("Transport request failed");
         const payload = await response.json();
 
@@ -105,6 +103,38 @@
       }
     }
 
-    loadWeather();
-    loadAirQuality();
-    loadTransport();
+    const REFRESH_MS = 30000;
+    const RING_LENGTH = 2 * Math.PI * 15.5;
+    const refreshCount = document.getElementById("refresh-count");
+    const refreshRing = document.getElementById("refresh-ring");
+    const refreshTimer = document.getElementById("refresh-timer");
+    let refreshStarted = Date.now();
+    let refreshing = false;
+
+    function paintCountdown() {
+      const remaining = Math.max(0, REFRESH_MS - (Date.now() - refreshStarted));
+      const secondsLeft = remaining === 0 ? 30 : Math.ceil(remaining / 1000);
+      refreshCount.textContent = String(secondsLeft);
+      refreshTimer.setAttribute("aria-label", "Next refresh in " + secondsLeft + " seconds");
+      refreshRing.style.strokeDasharray = String(RING_LENGTH);
+      refreshRing.style.strokeDashoffset = String(RING_LENGTH * (1 - remaining / REFRESH_MS));
+    }
+
+    async function refreshAll() {
+      if (refreshing) return;
+      refreshing = true;
+      refreshStarted = Date.now();
+      paintCountdown();
+      try {
+        await Promise.all([loadWeather(), loadAirQuality(), loadTransport()]);
+      } finally {
+        refreshing = false;
+      }
+    }
+
+    paintCountdown();
+    refreshAll();
+    setInterval(() => {
+      if (Date.now() - refreshStarted >= REFRESH_MS) refreshAll();
+      else paintCountdown();
+    }, 200);
